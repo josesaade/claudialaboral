@@ -2672,11 +2672,11 @@ function procesarExcelEmma(file){
         const usuario=(r['Nombre del solicitante']||'').trim().toUpperCase();
         const fecha=(r['Fecha de registro']||'').toString().split('T')[0].split(' ')[0];
         const areaRaw=(r['Area de derecho']||'').toUpperCase().trim();
-        let area='COMERCIAL';
+        let area=null;
         if(areaRaw.includes('PENAL')) area='PENAL';
         else if(areaRaw.includes('COMERCIAL')) area='COMERCIAL';
         return{rad,usuario,fecha,area};
-      });
+      }).filter(x=>x.area);
       if(otrasAreasRows.length>0) guardarNoticiasAreas(otrasAreasRows);
     }catch(err){
       showToast('⚠️ Error leyendo el archivo: '+err.message);
